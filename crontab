@@ -9,4 +9,3 @@
 0 9 * * * anonymous=False /home/lindsb/usr/anaconda/bin/jupyter nbconvert --ExecutePreprocessor.timeout=None --execute --to notebook --inplace /home/lindsb/storage-tracking/bokeh-plots.ipynb > /dev/null 2>&1
 
 0 6 * * * (crontab -l > /home/lindsb/crontab-backup/crontab; cd /home/lindsb/crontab-backup; git add .; git cm -m "$(date +'\%Y-\%m-\%d') Backup"; git push origin master) > /dev/null 2>&1
-
