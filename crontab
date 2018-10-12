@@ -12,4 +12,4 @@
 
 # */10 * * * * if [[ $(ssh -o ConnectTimeout=2 lindsb@rrstorage.synology.me 'cat file.txt') == 'working' ]]; then echo "working $(date)" >> $HOME/rrstorage-check.txt; else echo "NOT WORKING $(date)" >> $HOME/rrstorage-check.txt; echo "NOT WORKING $(date) | mail -s "Not Working" lindsb@seas.upenn.edu; fi
 
-* * * * * /home/lindsb/ping-rrstorage.sh
+# * * * * * /home/lindsb/ping-rrstorage.sh
