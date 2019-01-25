@@ -4,7 +4,7 @@
 
 1 0 * * * /opt/share/mem_tracking/print_remaining.sh
 
-# 1 * * * * /opt/share/mem_tracking/email_if_low.sh
+1 * * * * /opt/share/mem_tracking/email_if_low.sh
 
 0 9 * * * anonymous=False /home/lindsb/usr/anaconda/bin/jupyter nbconvert --ExecutePreprocessor.timeout=None --execute --to notebook --inplace /home/lindsb/storage-tracking/bokeh-plots.ipynb > /dev/null 2>&1
 
