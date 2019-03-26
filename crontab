@@ -4,7 +4,7 @@
 
 1 0 * * * /opt/share/mem_tracking/print_remaining.sh
 
-0 0 */2 * * /opt/share/mem_tracking/email_top_3_if_low.sh
+30 9 */2 * * /opt/share/mem_tracking/email_top_3_if_low.sh
 
 0 */3 * * * /opt/share/mem_tracking/email_group_if_low.sh
 
