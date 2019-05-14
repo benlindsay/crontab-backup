@@ -2,16 +2,32 @@
 1 0 * * * /opt/share/rrbackup/backup.sh
 # END BACKUP COMMAND
 
-1 0 * * * /opt/share/mem_tracking/print_remaining.sh
+# 1 0 * * * /opt/share/mem_tracking/print_remaining.sh
 
-30 9 */2 * * /opt/share/mem_tracking/email_top_3_if_low.sh
+# 30 9 */2 * * /opt/share/mem_tracking/email_top_3_if_low.sh
 
-0 */3 * * * /opt/share/mem_tracking/email_group_if_low.sh
+# 0 */3 * * * /opt/share/mem_tracking/email_group_if_low.sh
 
-0 9 * * * cd /home/lindsb/storage-tracking && /opt/seas/bin/sbatch sub.slurm > /dev/null 2>&1
+# 0 9 * * * cd /home/lindsb/storage-tracking && /opt/seas/bin/sbatch sub.slurm > /dev/null 2>&1
 
 0 6 * * * (crontab -l > /home/lindsb/crontab-backup/crontab; cd /home/lindsb/crontab-backup; git add .; git cm -m "$(date +'\%Y-\%m-\%d') Backup"; git push origin master) > /dev/null 2>&1
 
 # */10 * * * * if [[ $(ssh -o ConnectTimeout=2 lindsb@rrstorage.synology.me 'cat file.txt') == 'working' ]]; then echo "working $(date)" >> $HOME/rrstorage-check.txt; else echo "NOT WORKING $(date)" >> $HOME/rrstorage-check.txt; echo "NOT WORKING $(date) | mail -s "Not Working" lindsb@seas.upenn.edu; fi
 
 # * * * * * /home/lindsb/ping-rrstorage.sh
+
+# BEGIN MAINTENANCE COMMANDS
+# Print remaining storage space to file every day at 12:01 AM (result of df -h)
+1 0 * * * /opt/share/rrbackup/print_remaining.sh
+
+# Submit job to analyze and plot usage every dat at 9:00 AM
+0 9 * * * cd /opt/share/rrbackup && /opt/seas/bin/sbatch sub.slurm > /dev/null 2>&1
+
+# If storage gets below 1.5 TB, email top 3 users every 2 days at 9:30 AMto ask
+# them to delete stuff
+30 9 */2 * * /opt/share/rrbackup/email_top_3_if_low.sh
+
+# If storage gets below 0.75 TB, email the whole group every 3 hours to ask them
+# to delete stuff
+0 */3 * * * /opt/share/rrbackup/email_group_if_low.sh
+# END MAINTENANCE COMMANDS
